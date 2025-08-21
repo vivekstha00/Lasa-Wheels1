@@ -51,7 +51,7 @@ class VehicleController extends Controller
         
         Vehicle::create($data);
 
-        return redirect()->route('admin.pages.manage')->with('success', 'Vehicle added successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle added successfully.');
     }
 
     public function edit(Vehicle $vehicle)
@@ -92,7 +92,7 @@ class VehicleController extends Controller
         
         $vehicle->update($data);
 
-        return redirect()->route('admin.pages.manage')->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle updated successfully.');
     }
 
     public function destroy(Vehicle $vehicle)
@@ -103,6 +103,6 @@ class VehicleController extends Controller
         
         $vehicle->delete();
 
-        return redirect()->route('admin.pages.manage')->with('success', 'Vehicle deleted successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle deleted successfully.');
     }
 }

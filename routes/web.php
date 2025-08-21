@@ -22,6 +22,3 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::put('/update/{vehicle}', [AdminVehicleController::class, 'update'])->name('update');
     Route::delete('/delete/{vehicle}', [AdminVehicleController::class, 'destroy'])->name('delete');
 });
-
-// Authentication routes would go here
-// You can add authentication routes when needed

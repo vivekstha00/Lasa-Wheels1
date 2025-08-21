@@ -23,7 +23,7 @@
                         <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('admin.vehicles.index') }}">Manage Vehicles</a>
+                        <a class="nav-link active" href="{{ route('admin.manage') }}">Manage Vehicles</a>
                     </li>
                 </ul>
             </div>
@@ -35,14 +35,14 @@
             <div class="col-md-3">
                 <div class="list-group">
                     <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                    <a href="{{ route('admin.vehicles.index') }}" class="list-group-item list-group-item-action active">Manage Vehicles</a>
-                    <a href="{{ route('admin.vehicles.create') }}" class="list-group-item list-group-item-action">Add New Vehicle</a>
+                    <a href="{{ route('admin.manage') }}" class="list-group-item list-group-item-action active">Manage Vehicles</a>
+                    <a href="{{ route('admin.create') }}" class="list-group-item list-group-item-action">Add New Vehicle</a>
                 </div>
             </div>
             <div class="col-md-9">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2>Manage Vehicles</h2>
-                    <a href="{{ route('admin.vehicles.create') }}" class="btn btn-primary">
+                    <a href="{{ route('admin.create') }}" class="btn btn-primary">
                         <i class="fas fa-plus me-1"></i> Add New Vehicle
                     </a>
                 </div>
@@ -93,10 +93,10 @@
                                                 @endif
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.vehicles.edit', $vehicle->id) }}" class="btn btn-sm btn-primary">
+                                                <a href="{{ route('admin.edit', $vehicle->id) }}" class="btn btn-sm btn-primary">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('admin.vehicles.destroy', $vehicle->id) }}" method="POST" class="d-inline">
+                                                <form action="{{ route('admin.delete', $vehicle->id) }}" method="POST" class="d-inline">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this vehicle?')">
