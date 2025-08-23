@@ -2,10 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\VehicleController;
+use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\Admin\VehicleController as AdminVehicleController;
 
 // Public routes
 Route::get('/', [VehicleController::class, 'index'])->name('home');
+
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('/register', [LoginController::class, 'registerStore'])->name('user.register.store');
+
+Route::get('/login', [LoginController::class, 'index'])->name('user.login');
+Route::post('/login', [LoginController::class, 'store'])->name('login.store');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Admin routes (temporarily without authentication)
 Route::prefix('admin')->name('admin.')->group(function () {
