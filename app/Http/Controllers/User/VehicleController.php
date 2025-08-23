@@ -37,7 +37,7 @@ class VehicleController extends Controller
         $fuels = Fuel::all();
         $transmissions = Transmission::all();
         
-        return view('user.index', compact('vehicles', 'types', 'fuels', 'transmissions'));
+        return view('user.pages.index', compact('vehicles', 'types', 'fuels', 'transmissions'));
     }
     
     public function show(Vehicle $vehicle)
