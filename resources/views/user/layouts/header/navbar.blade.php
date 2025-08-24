@@ -5,34 +5,47 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
+           <ul class="navbar-nav me-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">Home</a>
+                    <a class="nav-link active" href="{{ route('home') }}">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Admin Dashboard</a>
-                </li>
-                
-                <!-- Authentication Links -->
                 @auth
-                    <li class="nav-item">
-                        <span class="nav-link">Hello, {{ Auth::user()->name }}</span>
-                    </li>
-                    <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST" class="d-inline">
-                            @csrf
-                            <button type="submit" class="btn btn-link nav-link">Logout</button>
-                        </form>
-                    </li>
-                @else
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('user.login') }}">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}">Register</a>
-                    </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('about') }}">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('vehicle') }}">Vehicle</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('contact') }}">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('blogs') }}">Blogs</a>
+                </li>
                 @endauth
             </ul>
+            <div>
+                @guest
+                    <a href="{{ route('login') }}">
+                        <button class="btn btn-outline-light me-2" style="min-width: 84px!important;" type="button">
+                            Login
+                        </button>
+                    </a>
+                    <a href="{{ route('register') }}">
+                        <button class="btn btn-outline-light me-2" style="min-width: 84px!important;" type="button">
+                            Sign Up
+                        </button>
+                    </a>
+                @else
+                    <span class="text-white me-3">Hi, {{ Auth::user()->name }}</span>
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button class="btn btn-outline-light me-2" style="min-width: 84px!important;" type="submit">
+                            Logout
+                        </button>
+                    </form>
+                @endguest
+            </div>
         </div>
     </div>
 </nav>
