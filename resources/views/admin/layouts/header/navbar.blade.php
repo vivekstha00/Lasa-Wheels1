@@ -1,22 +1,11 @@
 <!-- Top Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">Vehicle Rental Admin</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">View Site</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.dashboard') }}">Dashboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.manage') }}">Manage Vehicles</a>
-                </li>
-            </ul>
-        </div>
+<nav class="navbar navbar-dark bg-dark px-3">
+    <a class="navbar-brand" href="#">Vehicle Rental Admin</a>
+    <div class="ms-auto d-flex align-items-center text-white">
+        <span class="me-3">Hi, <strong>{{ Auth::user()->name ?? 'Guest' }}</strong></span>
+        <form method="POST" action="{{ route('admin.logout') }}" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn btn-outline-light btn-sm">Logout</button>
+        </form>
     </div>
 </nav>

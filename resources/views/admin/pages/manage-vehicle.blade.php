@@ -3,13 +3,6 @@
 
 <div class="container-fluid py-4">
     <div class="row">
-        <div class="col-md-3">
-            <div class="list-group">
-                <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action">Dashboard</a>
-                <a href="{{ route('admin.manage') }}" class="list-group-item list-group-item-action active">Manage Vehicles</a>
-                <a href="{{ route('admin.create') }}" class="list-group-item list-group-item-action">Add New Vehicle</a>
-            </div>
-        </div>
         <div class="col-md-9">
             <div class="d-flex justify-content-between align-items-center mb-4">
                 <h2>Manage Vehicles</h2>

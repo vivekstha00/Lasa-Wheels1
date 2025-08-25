@@ -3,11 +3,15 @@
 @include('admin.layouts.header.index')
 
 <body>
-    
-    @include('admin.layouts.header.navbar')
-    <main>
+
+    @include('admin.layouts.header.sidebar')
+
+    <div class="flex-grow-1 d-flex flex-column">
+
+        @include('admin.layouts.header.navbar')
+
         @yield('admin-content')
-    </main>
+    </div>
 
     @include('admin.layouts.footer.index')
 </body>

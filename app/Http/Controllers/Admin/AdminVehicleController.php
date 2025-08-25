@@ -6,16 +6,19 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Type;
-use App\Models\Fuel;
+use App\Models\Fuel;    
 use App\Models\Transmission;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
-class VehicleController extends Controller
+
+class AdminVehicleController extends Controller
 {
+
     public function index()
     {
         $vehicles = Vehicle::with(['type', 'fuel', 'transmission'])->paginate(10);
-        return view('admin.pages.manage', compact('vehicles'));
+        return view('admin.pages.manage-vehicle', compact('vehicles'));
     }
 
     public function create()
@@ -51,7 +54,7 @@ class VehicleController extends Controller
         
         Vehicle::create($data);
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle added successfully.');
+        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle added successfully.');
     }
 
     public function edit(Vehicle $vehicle)
@@ -59,7 +62,7 @@ class VehicleController extends Controller
         $types = Type::all();
         $fuels = Fuel::all();
         $transmissions = Transmission::all();
-        return view('admin.pages.edit', compact('vehicle', 'types', 'fuels', 'transmissions'));
+        return view('admin.pages.edit-vehicle', compact('vehicle', 'types', 'fuels', 'transmissions'));
     }
 
     public function update(Request $request, Vehicle $vehicle)
@@ -92,7 +95,7 @@ class VehicleController extends Controller
         
         $vehicle->update($data);
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle updated successfully.');
     }
 
     public function destroy(Vehicle $vehicle)
@@ -103,6 +106,7 @@ class VehicleController extends Controller
         
         $vehicle->delete();
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle deleted successfully.');
+        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle deleted successfully.');
     }
 }
+
