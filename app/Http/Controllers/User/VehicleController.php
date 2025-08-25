@@ -39,9 +39,9 @@ class VehicleController extends Controller
 
         return view('user.pages.vehicle', compact('vehicles', 'types', 'fuels', 'transmissions'));
     }
-    
+  
     public function show(Vehicle $vehicle)
     {
-        return view('user.pages.show', compact('vehicle'));
+        return view('user.pages.vehicle-detail', compact('vehicle'));
     }
 }

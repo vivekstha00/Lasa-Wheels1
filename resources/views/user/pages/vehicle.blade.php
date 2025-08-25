@@ -6,9 +6,9 @@
     <h1 class="text-center mb-5">Available Vehicles for Rent</h1>
     
     <!-- Filter Section -->
-    <div class="filter-section">
+    <div class="filter-section mb-5">
         <h4 class="mb-4">Filter Vehicles</h4>
-        <form method="GET" action="{{ route('home') }}">
+        <form method="GET" action="{{ route('vehicle') }}">
             <div class="row g-3">
                 <div class="col-md-3">
                     <label for="type" class="form-label">Vehicle Type</label>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-12 text-end">
                     <button type="submit" class="btn btn-primary">Apply Filters</button>
-                    <a href="{{ route('home') }}" class="btn btn-secondary">Reset</a>
+                    <a href="{{ route('vehicle') }}" class="btn btn-secondary">Reset</a>
                 </div>
             </div>
         </form>
@@ -54,7 +54,8 @@
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach($vehicles as $vehicle)
                 <div class="col">
-                    <div class="card h-100 vehicle-card">
+                    <!-- Make entire card clickable -->
+                    <div class="card h-100 vehicle-card" style="cursor: pointer;" onclick="window.location='{{ route('vehicle.show', $vehicle->id) }}'">
                         @if($vehicle->image)
                             <img src="{{ asset('storage/' . $vehicle->image) }}" class="card-img-top" alt="{{ $vehicle->name }}" style="height: 200px; object-fit: cover;">
                         @else
@@ -64,16 +65,22 @@
                         @endif
                         <div class="card-body">
                             <h5 class="card-title">{{ $vehicle->name }}</h5>
-                            <p class="card-text">{{ $vehicle->description }}</p>
-                            <ul class="list-group list-group-flush mb-3">
-                                <li class="list-group-item"><strong>Type:</strong> {{ $vehicle->type->name }}</li>
-                                <li class="list-group-item"><strong>Model:</strong> {{ $vehicle->model }}</li>
-                                <li class="list-group-item"><strong>Fuel:</strong> {{ $vehicle->fuel->name }}</li>
-                                <li class="list-group-item"><strong>Transmission:</strong> {{ $vehicle->transmission->name }}</li>
-                            </ul>
+                            <!-- Limited description with "..." -->
+                            <p class="card-text">{{ Str::limit($vehicle->description, 60) }}</p>
+                            
+                            <!-- Compact vehicle info -->
+                            <div class="mb-3">
+                                <small class="text-muted d-block"><strong>Type:</strong> {{ $vehicle->type->name }}</small>
+                                <small class="text-muted d-block"><strong>Model:</strong> {{ $vehicle->model }}</small>
+                                <small class="text-muted d-block"><strong>Fuel:</strong> {{ $vehicle->fuel->name }} | <strong>Transmission:</strong> {{ $vehicle->transmission->name }}</small>
+                            </div>
+                            
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag">${{ number_format($vehicle->price_per_day, 2) }}/day</span>
-                                <button class="btn btn-primary">Rent Now</button>
+                                <span class="price-tag h5 text-primary mb-0">${{ number_format($vehicle->price_per_day, 2) }}/day</span>
+                                <!-- Prevent button from triggering card click -->
+                                <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location='{{ route('vehicle.show', $vehicle->id) }}'">
+                                    View Details
+                                </button>
                             </div>
                         </div>
                     </div>
