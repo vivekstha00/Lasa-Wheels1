@@ -25,7 +25,7 @@
             
             <!-- Tab Content -->
             <div class="tab-content" id="bookingTabsContent">
-                <!-- Self Drive Tab -->
+                <!-- Self Drive Tab Content -->
                 <div class="tab-pane fade show active" id="self-drive" role="tabpanel" aria-labelledby="self-drive-tab">
                     <form>
                         <div class="mb-3">
@@ -56,13 +56,13 @@
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary w-100 py-2">
-                                <i class="fas fa-search me-2"></i>Search Vehicles
+                                <i class="fas fa-search me-2"></i>Search Self Drive Vehicles
                             </button>
                         </div>
                     </form>
                 </div>
                 
-                <!-- With Driver Tab -->
+                <!-- With Driver Tab Content -->
                 <div class="tab-pane fade" id="with-driver" role="tabpanel" aria-labelledby="with-driver-tab">
                     <form>
                         <div class="mb-3">
@@ -93,7 +93,7 @@
                         </div>
                         <div class="mb-3">
                             <button type="submit" class="btn btn-primary w-100 py-2">
-                                <i class="fas fa-search me-2"></i>Search Vehicles
+                                <i class="fas fa-search me-2"></i>Search With Driver Vehicles
                             </button>
                         </div>
                     </form>
@@ -112,7 +112,7 @@
     </div>
 </div>
 
-<style>
+<!-- <style>
 /* Keep normal icon colors in tabs */
 .nav-tabs .nav-link i {
     color: #6c757d !important;
@@ -125,6 +125,6 @@
 .nav-tabs .nav-link:hover i {
     color: #6c757d !important;
 }
-</style>
+</style> -->
 
 @endsection
