@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Welcome to Our Platform</title>
+    <title>Welcome to LasaWheel</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -137,21 +137,12 @@
             font-size: 14px;
         }
         
-        .social-links {
+        .admin-note {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
             margin: 20px 0;
-        }
-        
-        .social-links a {
-            display: inline-block;
-            margin: 0 10px;
-            width: 40px;
-            height: 40px;
-            background: #667eea;
-            border-radius: 50%;
-            color: white;
-            text-decoration: none;
-            line-height: 40px;
-            font-size: 18px;
+            border-radius: 5px;
         }
         
         .divider {
@@ -182,9 +173,9 @@
         <div class="email-card">
             <!-- Header with gradient background -->
             <div class="header">
-                <div class="welcome-icon">🎉</div>
-                <h1>Welcome to Our Platform!</h1>
-                <p>Your journey starts here</p>
+                <div class="welcome-icon">🚗</div>
+                <h1>Welcome to LasaWheel!</h1>
+                <p>Your premium vehicle rental experience starts here</p>
             </div>
             
             <!-- Main content -->
@@ -194,9 +185,17 @@
                 </div>
                 
                 <div class="message">
-                    <p>We're absolutely <strong>thrilled</strong> to have you join our amazing community! 🚀</p>
+                    @if(isset($mailData['created_by']) && $mailData['created_by'] === 'admin')
+                        <div class="admin-note">
+                            <strong>🔧 Account Created by Administrator</strong><br>
+                            Your account has been created by {{ $mailData['admin_name'] ?? 'our admin team' }}. 
+                            You can now access our platform using your registered email.
+                        </div>
+                    @endif
                     
-                    <p>Your account has been successfully created, and you're now part of something special. We've built this platform with love and care, just for people like you.</p>
+                    <p>We're absolutely <strong>thrilled</strong> to have you join the LasaWheel family! 🚀</p>
+                    
+                    <p>Your account has been successfully created, and you're now part of Nepal's premier vehicle rental platform. We've built this service with care and precision, just for travelers and adventurers like you.</p>
                 </div>
                 
                 <div class="divider"></div>
@@ -205,41 +204,45 @@
                 <div class="features">
                     <h3>🌟 What's waiting for you:</h3>
                     <ul class="feature-list">
-                        <li>Access to premium vehicle rentals</li>
-                        <li>24/7 customer support</li>
+                        <li>Premium vehicle fleet (Cars, Bikes, SUVs)</li>
+                        <li>24/7 customer support in Nepal</li>
                         <li>Exclusive member discounts</li>
                         <li>Easy booking management</li>
                         <li>Loyalty rewards program</li>
+                        <li>GPS tracking and roadside assistance</li>
                     </ul>
                 </div>
                 
                 <div style="text-align: center;">
                     <a href="{{ url('/') }}" class="cta-button">
-                        🚗 Start Exploring Now
+                        🚗 Start Your Journey Now
                     </a>
                 </div>
                 
                 <div class="message">
+                    @if(isset($mailData['created_by']) && $mailData['created_by'] === 'admin')
+                        <p><strong>📧 Account Details:</strong><br>
+                        Email: {{ $mailData['email'] }}<br>
+                        <small>Please contact your administrator for your login password.</small></p>
+                    @else
+                        <p><strong>🎊 You're all set!</strong> You can now log in to your account and start exploring our amazing vehicle collection.</p>
+                    @endif
+                    
                     <p>If you have any questions or need assistance, our friendly support team is always here to help. Just reply to this email or visit our help center.</p>
                     
-                    <p><strong>Welcome aboard!</strong> 🎊</p>
+                    <p><strong>Happy travels with LasaWheel!</strong> 🎊</p>
                     
                     <p>Best regards,<br>
-                    <strong>The Vehicle Rental Team</strong></p>
+                    <strong>The LasaWheel Team</strong><br>
+                    <small>Nepal's Trusted Vehicle Rental Platform</small></p>
                 </div>
             </div>
             
             <!-- Footer -->
             <div class="footer">
-                <div class="social-links">
-                    <a href="#" title="Facebook">📘</a>
-                    <a href="#" title="Twitter">🐦</a>
-                    <a href="#" title="Instagram">📷</a>
-                    <a href="#" title="LinkedIn">💼</a>
-                </div>
-                
-                <p>© {{ date('Y') }} Vehicle Rental Platform. All rights reserved.</p>
-                <p>You're receiving this email because you just signed up for our platform.</p>
+                <p>© {{ date('Y') }} LasaWheel. All rights reserved.</p>
+                <p>Kathmandu, Nepal | Email: support@lasawheel.com</p>
+                <p>You're receiving this email because you have an account with LasaWheel.</p>
             </div>
         </div>
     </div>

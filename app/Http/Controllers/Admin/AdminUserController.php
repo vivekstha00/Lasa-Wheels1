@@ -56,9 +56,13 @@ class AdminUserController extends Controller
             try {
                 Mail::to($request->email)->send(new WelcomeEmail([
                     'name' => $request->name,
+                    'email' => $request->email,
+                    'created_by' => 'admin',
+                    'admin_name' => auth()->user()->name ?? 'Administrator',
                 ]));
+                Log::info('Welcome email sent successfully to: ' . $request->email);
             } catch (Throwable $th) {
-                Log::debug('Error while sending email.');
+                Log::debug('Error while sending email: ' . $th->getMessage());
             }
 
             flash()->success('Operation completed successfully.');

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'phone',
         'address',
         'driver_license',
+        'email_verified_at',
         'role',
         'age',
     ];

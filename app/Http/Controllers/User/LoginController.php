@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\WelcomeEmail;
+use Illuminate\Support\Facades\Log;
+use Throwable;
 
 class LoginController extends Controller
 {
@@ -60,7 +64,19 @@ class LoginController extends Controller
             'address' => $request->address,
             'password' => Hash::make($request->password),
             'driving_license' => $licensePath,
+            'role' => 'user',
         ]);
+        
+        try {
+            Mail::to($user->email)->send(new WelcomeEmail([
+                'name' => $user->name,
+                'email' => $user->email,
+                'created_by' => 'self_registration'
+            ]));
+            Log::info('Welcome email sent successfully to: ' . $user->email);
+        } catch (Throwable $th) {
+                Log::debug('Error while sending email: ' . $th->getMessage());
+        }
 
         auth()->login($user);
         return redirect()->route('home')->with('success', 'Registration successful! You are now logged in.');
