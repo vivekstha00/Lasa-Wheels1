@@ -26,7 +26,7 @@ class AdminMiddleware
             $request->session()->invalidate();
             $request->session()->regenerateToken();
             toastr()->error('Access denied. Admin privileges required.');
-            return redirect()->route('admin.pages.login');
+            return redirect()->route('admin.login');
         }
         return $next($request);
     }

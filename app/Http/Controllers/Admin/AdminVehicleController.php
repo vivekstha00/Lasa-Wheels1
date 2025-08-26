@@ -95,7 +95,7 @@ class AdminVehicleController extends Controller
         
         $vehicle->update($data);
 
-        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle updated successfully.');
     }
 
     public function destroy(Vehicle $vehicle)

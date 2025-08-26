@@ -47,7 +47,7 @@
                                     <td>{{ $vehicle->name }}</td>
                                     <td>{{ $vehicle->type->name }}</td>
                                     <td>{{ $vehicle->model }}</td>
-                                    <td>${{ number_format($vehicle->price_per_day, 2) }}</td>
+                                    <td>रू{{ number_format($vehicle->price_per_day, 2) }}</td>
                                     <td>
                                         @if($vehicle->is_available)
                                             <span class="badge bg-success">Available</span>
