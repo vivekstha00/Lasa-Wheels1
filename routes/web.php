@@ -42,12 +42,14 @@ Route::prefix('admin')->middleware(AdminMiddleware::class)->as('admin.')->group(
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     // Vehicle management routes
-    Route::get('/manage', [AdminVehicleController::class, 'index'])->name('manage');
-    Route::get('/create', [AdminVehicleController::class, 'create'])->name('create');
-    Route::post('/store', [AdminVehicleController::class, 'store'])->name('store');
-    Route::get('/edit/{vehicle}', [AdminVehicleController::class, 'edit'])->name('edit');
-    Route::put('/update/{vehicle}', [AdminVehicleController::class, 'update'])->name('update');
-    Route::delete('/delete/{vehicle}', [AdminVehicleController::class, 'destroy'])->name('delete');
+    Route::controller(AdminVehicleController::class)->group(function () {
+        Route::get('/manage', 'index')->name('manage');
+        Route::get('/create', 'create')->name('create');
+        Route::post('/store', 'store')->name('store');
+        Route::get('/edit/{vehicle}', 'edit')->name('edit');
+        Route::put('/update/{vehicle}', 'update')->name('update');
+        Route::delete('/delete/{vehicle}', 'destroy')->name('delete');
+    });
 
     // User management routes
     Route::prefix('users')->as('users.')->controller(AdminUserController::class)->group(function () {
