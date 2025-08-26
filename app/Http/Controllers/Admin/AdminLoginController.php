@@ -58,8 +58,8 @@ class AdminLoginController extends Controller
             toastr()->success('User verified successfully.');
         } else {
             toastr()->error('Invalid verification token.');
+            return redirect()->route('admin.login');
         }
-        return redirect()->route('admin.pages.login');
     }
     public function logout(Request $request)
     {
@@ -68,7 +68,7 @@ class AdminLoginController extends Controller
         $request->session()->regenerateToken();
         
         toastr()->success('You have been logged out successfully.');
-        return redirect()->route('admin.pages.login');
+        return redirect()->route('admin.login');
     }
 }
 
