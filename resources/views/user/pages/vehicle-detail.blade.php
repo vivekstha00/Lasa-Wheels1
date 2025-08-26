@@ -29,7 +29,7 @@
 
             <!-- Price -->
             <div class="bg-primary text-white p-3 rounded mb-4">
-                <h3 class="mb-0">${{ number_format($vehicle->price_per_day, 2) }} <small>/day</small></h3>
+                <h3 class="mb-0">रू{{ number_format($vehicle->price_per_day, 2) }} <small>/day</small></h3>
             </div>
 
             <!-- Vehicle Specifications -->

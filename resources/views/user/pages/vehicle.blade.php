@@ -76,7 +76,7 @@
                             </div>
                             
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="price-tag h5 text-primary mb-0">${{ number_format($vehicle->price_per_day, 2) }}/day</span>
+                                <span class="price-tag h5 text-primary mb-0">रू{{ number_format($vehicle->price_per_day, 2) }}/day</span>
                                 <!-- Prevent button from triggering card click -->
                                 <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); window.location='{{ route('vehicle.show', $vehicle->id) }}'">
                                     View Details

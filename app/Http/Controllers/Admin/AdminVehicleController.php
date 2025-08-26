@@ -54,7 +54,7 @@ class AdminVehicleController extends Controller
         
         Vehicle::create($data);
 
-        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle added successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle added successfully.');
     }
 
     public function edit(Vehicle $vehicle)
@@ -106,7 +106,7 @@ class AdminVehicleController extends Controller
         
         $vehicle->delete();
 
-        return redirect()->route('admin.manage-vehicle')->with('success', 'Vehicle deleted successfully.');
+        return redirect()->route('admin.manage')->with('success', 'Vehicle deleted successfully.');
     }
 }
 
