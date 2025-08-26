@@ -36,7 +36,7 @@ class AdminLoginController extends Controller
 
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 toastr()->success('Login successful!');
-                return redirect()->route('admin.pages.dashboard');
+                return redirect()->route('admin.dashboard');
             } else {
                 toastr()->error('Invalid credentials. Please try again.');
                 return redirect()->back()->withInput($request->input());
