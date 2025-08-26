@@ -26,7 +26,7 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Role</th>
+                                <th>Age</th>
                                 <th>Joined</th>
                                 <th>Actions</th>
                                 <th>Address</th>
@@ -37,13 +37,7 @@
                                 <tr>
                                     <td>{{ $user->name }}</td>
                                     <td>{{ $user->email }}</td>
-                                    <td>
-                                        @if($user->role == 'admin')
-                                            <span class="badge bg-primary">Admin</span>
-                                        @else
-                                            <span class="badge bg-secondary">User</span>
-                                        @endif
-                                    </td>
+                                    <td>{{ $user->age }}</td>
                                     <td>{{ $user->created_at->format('d M, Y') }}</td>
                                     <td>
                                         <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-primary">

@@ -30,6 +30,7 @@ class AdminUserController extends Controller
         try {
             $validator = Validator::make($request->all(), [
                 'name' => 'required',
+                'age' => 'required|numeric|min:18|max:100',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required|min:6',
                 'role' => 'required|in:user,admin',
@@ -46,6 +47,7 @@ class AdminUserController extends Controller
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'age' => $request->age,
                 'password' => Hash::make($request->password), // Hash the password
                 'role' => $request->role,
                 'address' => $request->address,
@@ -83,6 +85,7 @@ class AdminUserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'age' => 'required|numeric|min:18|max:100',
             'email' => 'required|email|unique:users,email,'.$id,
             'role' => 'required|in:user,admin', 
             'address' => 'required|string|max:255',
@@ -105,6 +108,7 @@ class AdminUserController extends Controller
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
+            'age' => $request->age,
             'address' => $request->address,
             'role' => $request->role,
         ]);
