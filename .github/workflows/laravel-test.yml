@@ -56,7 +56,7 @@ jobs:
         # php artisan db:seed --env=testing --force
 
     - name: Execute Tests (PHPUnit)
-      run: vendor/bin/phpunit --verbose
+      run: vendor/bin/phpunit
 
   # Optional: Code style check
   code-style:
