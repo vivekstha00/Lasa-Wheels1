@@ -30,13 +30,15 @@ jobs:
         extensions: mbstring, pdo_mysql, xml, ctype, iconv, intl, json
         coverage: none
 
+    - name: Install Composer Dependencies
+      run: composer install --prefer-dist --no-interaction --no-progress
+
     - name: Copy Environment File for Testing
-      run: |
-        cp .env.example .env.testing
-        php artisan key:generate --env=testing --force
+      run: cp .env.example .env.testing
 
     - name: Setup MySQL Environment Variables
       run: |
+        echo "APP_ENV=testing" >> .env.testing
         echo "DB_CONNECTION=mysql" >> .env.testing
         echo "DB_HOST=127.0.0.1" >> .env.testing
         echo "DB_PORT=3306" >> .env.testing
@@ -44,12 +46,8 @@ jobs:
         echo "DB_USERNAME=root" >> .env.testing
         echo "DB_PASSWORD=root_password" >> .env.testing
 
-    - name: Install Composer Dependencies
-      run: composer install --prefer-dist --no-interaction --no-progress
-
-    # Remove the duplicate key generation step (it's already done above for testing)
-    # - name: Generate Laravel Application Key
-    #   run: php artisan key:generate
+    - name: Generate Application Key for Testing
+      run: php artisan key:generate --env=testing --force
 
     - name: Create Database and Run Migrations
       run: |
