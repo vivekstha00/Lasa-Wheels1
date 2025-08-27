@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\WelcomeEmail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage; 
 use Throwable;
 
 class AdminUserController extends Controller
@@ -35,6 +36,8 @@ class AdminUserController extends Controller
                 'password' => 'required|min:6',
                 'role' => 'required|in:user,admin',
                 'address' => 'required|string|max:255',
+                'phone' => 'nullable|string|max:15',
+                'driving_license' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
             ]);
 
             if ($validator->fails()) {
@@ -44,13 +47,23 @@ class AdminUserController extends Controller
                     ->withErrors($validator->errors());
             }
 
+            // Handle driving license upload
+            $licensePath = null;
+            if ($request->hasFile('driving_license')) {
+                $file = $request->file('driving_license');
+                $fileName = time() . '_admin_' . $file->getClientOriginalName();
+                $licensePath = $file->storeAs('driver_licenses', $fileName, 'public');
+            }
+
             User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'age' => $request->age,
-                'password' => Hash::make($request->password), // Hash the password
+                'phone' => $request->phone,                    
+                'password' => Hash::make($request->password),
                 'role' => $request->role,
                 'address' => $request->address,
+                'driver_license' => $licensePath,              
             ]);
 
             try {
@@ -93,6 +106,8 @@ class AdminUserController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'role' => 'required|in:user,admin', 
             'address' => 'required|string|max:255',
+            'phone' => 'nullable|string|max:15',
+            'driving_license' => 'nullable|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -109,12 +124,25 @@ class AdminUserController extends Controller
             return redirect()->route('admin.users.index');
         }
 
+        $licensePath = $user->driver_license; 
+        if ($request->hasFile('driving_license')) {
+            if ($user->driver_license && \Storage::disk('public')->exists($user->driver_license)) {
+                \Storage::disk('public')->delete($user->driver_license);
+            }
+            
+            $file = $request->file('driving_license');
+            $fileName = time() . '_admin_' . $file->getClientOriginalName();
+            $licensePath = $file->storeAs('driver_licenses', $fileName, 'public');
+        }
+
         $user->update([
             'name' => $request->name,
             'email' => $request->email,
             'age' => $request->age,
+            'phone' => $request->phone,  
             'address' => $request->address,
             'role' => $request->role,
+            'driver_license' => $licensePath,
         ]);
 
         flash()->success('User updated successfully.');
@@ -130,6 +158,9 @@ class AdminUserController extends Controller
             return redirect()->route('admin.users.index');
         }
         
+        if ($user->driver_license && \Storage::disk('public')->exists($user->driver_license)) {
+        \Storage::disk('public')->delete($user->driver_license);
+    }
         $user->delete();
         return redirect()->route('admin.users.index');
     }

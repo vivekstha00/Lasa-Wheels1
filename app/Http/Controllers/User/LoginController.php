@@ -53,34 +53,48 @@ class LoginController extends Controller
             'driving_license' => 'required|file|mimes:jpeg,png,jpg,pdf|max:2048',
         ]);
 
-        $licensePath = null;
-        if ($request->hasFile('driving_license')) {
-            $licensePath = $request->file('driving_license')->store('driver_licenses', 'public');
-        }
-        $user = User::create([
-            'name' => $request->full_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'password' => Hash::make($request->password),
-            'driving_license' => $licensePath,
-            'role' => 'user',
-        ]);
-        
         try {
-            Mail::to($user->email)->send(new WelcomeEmail([
-                'name' => $user->name,
-                'email' => $user->email,
-                'created_by' => 'self_registration'
-            ]));
-            Log::info('Welcome email sent successfully to: ' . $user->email);
-        } catch (Throwable $th) {
+            $licensePath = null;
+            if ($request->hasFile('driving_license')) {
+                $file = $request->file('driving_license');
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $licensePath = $file->storeAs('driver_licenses', $fileName, 'public');
+                
+                // DEBUG: Log the file path to check if it's being saved
+                Log::info('License file saved to: ' . $licensePath);
+            }
+            
+            $user = User::create([
+                'name' => $request->full_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'password' => Hash::make($request->password),
+                'driver_license' => $licensePath,  // CHANGE: Use driver_license (database field name)
+                'role' => 'user',
+            ]);
+            
+            // DEBUG: Check if user was created with license
+            Log::info('User created with license: ' . $user->driver_license);
+            
+            try {
+                Mail::to($user->email)->send(new WelcomeEmail([
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'created_by' => 'self_registration'
+                ]));
+                Log::info('Welcome email sent successfully to: ' . $user->email);
+            } catch (Throwable $th) {
                 Log::debug('Error while sending email: ' . $th->getMessage());
-        }
+            }
 
-        auth()->login($user);
-        return redirect()->route('home')->with('success', 'Registration successful! You are now logged in.');
-        
+            auth()->login($user);
+            return redirect()->route('home')->with('success', 'Registration successful! You are now logged in.');
+            
+        } catch (\Exception $e) {
+            Log::error('Registration failed: ' . $e->getMessage());
+            return back()->withInput()->withErrors(['error' => 'Registration failed. Please try again.']);
+        }
     }
 
     public function logout(Request $request)
