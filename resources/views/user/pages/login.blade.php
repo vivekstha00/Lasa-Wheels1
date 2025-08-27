@@ -21,6 +21,11 @@
                         <div class="text-danger">{{ $message }}</div>
                     @enderror
                 </div>
+                <div class="mb-3 text-end">
+                    <a href="{{ route('forgot-password') }}" class="text-decoration-none">
+                        <small>Forgot Password? </small>
+                    </a>
+                </div>
                 <button type="submit" class="btn btn-primary w-100">Login</button>
             </form>
             <div class="mt-3">

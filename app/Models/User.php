@@ -18,6 +18,8 @@ class User extends Authenticatable
         'phone',
         'address',
         'driver_license',
+        'otp',                 
+        'otp_expires_at',
         'email_verified_at',
         'role',
         'age',
@@ -42,6 +44,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'otp_expires_at' => 'datetime',
             'password' => 'hashed',
         ];
     }

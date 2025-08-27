@@ -12,6 +12,8 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\User\ContactController;
 use App\Http\Controllers\User\AboutController;
 use App\Http\Controllers\User\BlogController;
+use App\Http\Controllers\User\AuthController;
+
 
 // Public routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -28,6 +30,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 });
+
+Route::get('/forgot-password', function () {
+    return view('user.pages.forgot-password');
+})->name('forgot-password');
 
 // Admin login routes (without middleware)
 Route::prefix('admin')->as('admin.')->group(function () {
