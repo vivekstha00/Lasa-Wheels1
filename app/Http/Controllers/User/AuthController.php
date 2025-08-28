@@ -41,7 +41,7 @@ class AuthController extends Controller
 
             return response()->json([
                 'message' => 'OTP sent to your email successfully',
-                'expires_in' => '10 minutes'
+                'expires_in' => '10 minutes',
             ], 200);
 
         } catch (\Exception $e) {

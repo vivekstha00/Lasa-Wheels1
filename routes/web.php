@@ -23,47 +23,32 @@ Route::get('/login', [LoginController::class, 'index'])->name('user.login');
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/vehicle', [VehicleController::class, 'index'])->name('vehicle');
-    Route::get('/vehicle/{vehicle}', [VehicleController::class, 'show'])->name('vehicle.show');
-    Route::get('/about', [AboutController::class, 'index'])->name('about');
-    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
-    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
-});
-
+// Forgot password routes
 Route::get('/forgot-password', function () {
     return view('user.pages.forgot-password');
 })->name('forgot-password');
 
-// Admin login routes (without middleware)
-Route::prefix('admin')->as('admin.')->group(function () {
-    Route::get('/login', [AdminLoginController::class, 'index'])->name('login');
-    Route::post('/login', [AdminLoginController::class, 'check'])->name('login.check');
-    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('logout');
+Route::post('/api/forgot-password', [AuthController::class, 'forgetPassword']);
+Route::post('/api/verify-otp', [AuthController::class, 'verifyOtp']);
+Route::post('/api/reset-password', [AuthController::class, 'resetPassword']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/vehicle', [VehicleController::class, 'index'])->name('vehicle');
+    Route::get('/vehicle/{vehicle}', [VehicleController::class, 'show'])->name('vehicle.show');
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::get('/about', [AboutController::class, 'index'])->name('about');
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
 });
 
-
-// Admin protected routes (with middleware)
-Route::prefix('admin')->middleware(AdminMiddleware::class)->as('admin.')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-
-    // Vehicle management routes
-    Route::controller(AdminVehicleController::class)->group(function () {
-        Route::get('/manage', 'index')->name('manage');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/store', 'store')->name('store');
-        Route::get('/edit/{vehicle}', 'edit')->name('edit');
-        Route::put('/update/{vehicle}', 'update')->name('update');
-        Route::delete('/delete/{vehicle}', 'destroy')->name('delete');
-    });
-
-    // User management routes
-    Route::prefix('users')->as('users.')->controller(AdminUserController::class)->group(function () {
-        Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
-        Route::post('/', 'store')->name('store');
-        Route::get('/{id}', 'edit')->name('edit');
-        Route::put('/{id}', 'update')->name('update');
-        Route::delete('/{id}', 'delete')->name('delete');
+// Admin routes
+Route::prefix('admin')->group(function () {
+    Route::get('/login', [AdminLoginController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminLoginController::class, 'login'])->name('admin.login.submit');
+    Route::post('/logout', [AdminLoginController::class, 'logout'])->name('admin.logout');
+    
+    Route::middleware([AdminMiddleware::class])->group(function () {
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('admin.dashboard');
+        Route::resource('vehicles', AdminVehicleController::class, ['as' => 'admin']);
+        Route::resource('users', AdminUserController::class, ['as' => 'admin']);
     });
 });
