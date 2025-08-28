@@ -11,29 +11,26 @@ use Carbon\Carbon;
 
 class AdminLoginController extends Controller
 {
-    public function index()
+    public function showLoginForm()
     {
-        if (Auth::check()) {
-            return redirect()->route('admin.dashboard');
-        }
         return view('admin.pages.login');
     }
-
-    public function check(Request $request)
+    
+    public function login(Request $request)
     {
         try{
             $validator = Validator::make($request->all(), [
                 'email' => 'required|email',
                 'password' => 'required|min:6',
             ]);
-
+            
             if ($validator->fails()) {
                 toastr()->warning('Validation failed. Please check your input.');
                 return redirect()->back()
                 ->withInput($request->input())
                 ->withErrors($validator->errors());
             }
-
+            
             if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                 toastr()->success('Login successful!');
                 return redirect()->route('admin.dashboard');
@@ -46,7 +43,7 @@ class AdminLoginController extends Controller
             return redirect()->back()->withInput($request->input());
         }
     }
-
+    
     public function verification($token)
     {
         $tokenExists = User::where('verification_token', $token)->first();
@@ -60,6 +57,13 @@ class AdminLoginController extends Controller
             toastr()->error('Invalid verification token.');
             return redirect()->route('admin.login');
         }
+    }
+    public function index()
+    {
+        if (Auth::check()) {
+            return redirect()->route('admin.dashboard');
+        }
+        return view('admin.pages.login');
     }
     public function logout(Request $request)
     {

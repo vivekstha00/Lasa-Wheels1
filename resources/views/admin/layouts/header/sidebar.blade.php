@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-white" href="{{ route('admin.manage') }}">
+            <a class="nav-link text-white" href="{{ route('admin.vehicles.index') }}">
                 <i class="fas fa-car me-2"></i>Manage Vehicles
             </a>
         </li>

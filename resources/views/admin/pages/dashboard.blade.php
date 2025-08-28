@@ -58,12 +58,12 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.create') }}" class="btn btn-primary btn-lg w-100 py-3">
+                        <a href="{{ route('admin.vehicles.create') }}" class="btn btn-primary btn-lg w-100 py-3">
                             <i class="fas fa-plus me-2"></i> Add New Vehicle
                         </a>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <a href="{{ route('admin.manage') }}" class="btn btn-success btn-lg w-100 py-3">
+                        <a href="{{ route('admin.vehicles.index') }}" class="btn btn-success btn-lg w-100 py-3">
                             <i class="fas fa-edit me-2"></i> Manage Vehicles
                         </a>
                     </div>
