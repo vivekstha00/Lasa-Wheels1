@@ -44,17 +44,19 @@
                         </div>
 
                         <!-- Password -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3">
-                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                                    <input type="password" class="form-control @error('password') is-invalid @enderror" 
-                                           id="password" name="password" required>
-                                    @error('password')
-                                        <div class="invalid-feedback">{{ $message }}</div>
-                                    @enderror
-                                </div>
+                        <div class="mb-3 position-relative">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input type="password" name="password" id="password"
+                                    class="password form-control @error('password') is-invalid @enderror"
+                                    value="{{ old('password') }}">
+                                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                    <i class="bi password-toggle bi-eye"></i>
+                                </span>
                             </div>
+                            @error('password')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
 
                         <!-- Address -->
@@ -101,3 +103,20 @@
     </div>
 </div>
 @endsection
+@push('js')
+<script>
+    $(document).ready(function() {
+        $('body').on('click', '.password-toggle', function() {
+            if ($(this).hasClass('bi-eye')) {
+                $(this).removeClass('bi-eye');
+                $(this).addClass('bi-eye-slash');
+                $('.password').attr('type', 'text');
+            } else { // bi-eye xaina
+                $(this).removeClass('bi-eye-slash');
+                $(this).addClass('bi-eye');
+                $('.password').attr('type', 'password');
+            }
+        });
+    });
+</script>
+@endpush
