@@ -5,7 +5,7 @@
     <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-left: 16.666667%;">    
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Add New Vehicle</h2>
-            <a href="{{ route('admin.manage') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.vehicles.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Back to Vehicles
             </a>
         </div>
@@ -22,7 +22,7 @@
         
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.vehicles.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     
                     <div class="row">
@@ -105,7 +105,7 @@
                     </div>
                     
                     <button type="submit" class="btn btn-primary">Add Vehicle</button>
-                    <a href="{{ route('admin.manage') }}" class="btn btn-secondary">Cancel</a>
+                    <a href="{{ route('admin.vehicles.index') }}" class="btn btn-secondary">Cancel</a>
                 </form>
             </div>
         </div>
