@@ -35,7 +35,9 @@ class AdminVehicleController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'type_id' => 'required|exists:types,id',
+            'brand' => 'required|string|max:255',
             'model' => 'required|string|max:255',
+            'year' => 'required|digits:4|integer|min:1990|max:' . (date('Y') + 1),
             'fuel_id' => 'required|exists:fuels,id',
             'transmission_id' => 'required|exists:transmissions,id',
             'price_per_day' => 'required|numeric|min:0',
@@ -54,7 +56,7 @@ class AdminVehicleController extends Controller
         
         Vehicle::create($data);
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle added successfully.');
+        return redirect()->route('admin.vehicles.index')->with('success', 'Vehicle added successfully.');
     }
 
     public function edit(Vehicle $vehicle)
@@ -95,7 +97,7 @@ class AdminVehicleController extends Controller
         
         $vehicle->update($data);
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle updated successfully.');
+        return redirect()->route('admin.vehicles.index')->with('success', 'Vehicle updated successfully.');
     }
 
     public function destroy(Vehicle $vehicle)
@@ -106,7 +108,7 @@ class AdminVehicleController extends Controller
         
         $vehicle->delete();
 
-        return redirect()->route('admin.manage')->with('success', 'Vehicle deleted successfully.');
+        return redirect()->route('admin.vehicles.index')->with('success', 'Vehicle deleted successfully.');
     }
 }
 

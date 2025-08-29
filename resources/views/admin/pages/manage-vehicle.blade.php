@@ -83,13 +83,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" role="group">
-                                                <!-- View Button -->
-                                                <a href="{{ route('admin.vehicles.show', $vehicle->id) }}" 
-                                                   class="btn btn-sm btn-info" 
-                                                   title="View Details">
-                                                    <i class="fas fa-eye"></i>
-                                                </a>
-                                                
+
                                                 <!-- FIXED: Change admin.edit to admin.vehicles.edit -->
                                                 <a href="{{ route('admin.vehicles.edit', $vehicle->id) }}" 
                                                    class="btn btn-sm btn-warning" 

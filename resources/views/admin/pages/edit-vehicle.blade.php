@@ -6,7 +6,7 @@
     <div class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="margin-left: 16.666667%;">    
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Edit Vehicle: {{ $vehicle->name }}</h2>
-            <a href="{{ route('admin.manage') }}" class="btn btn-secondary">
+            <a href="{{ route('admin.vehicles.index') }}" class="btn btn-secondary">
                 <i class="fas fa-arrow-left me-1"></i> Back to Vehicles
             </a>
         </div>
@@ -30,7 +30,7 @@
         
         <div class="card">
             <div class="card-body">
-                <form action="{{ route('admin.update', $vehicle->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.vehicles.update', $vehicle->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                     
@@ -46,13 +46,19 @@
                         </div>
                         <div class="col-md-8">
                             <div class="row">
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="name" class="form-label">Vehicle Name *</label>
                                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $vehicle->name) }}" required>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
+                                    <div class="mb-3">
+                                        <label for="brand" class="form-label">Brand *</label>
+                                        <input type="text" class="form-control" id="brand" name="brand" value="{{ old('brand', $vehicle->brand) }}" placeholder="e.g., Toyota, Honda" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
                                     <div class="mb-3">
                                         <label for="model" class="form-label">Model *</label>
                                         <input type="text" class="form-control" id="model" name="model" value="{{ old('model', $vehicle->model) }}" required>
@@ -60,9 +66,19 @@
                                 </div>
                             </div>
                             
-                            <div class="mb-3">
-                                <label for="image" class="form-label">Update Vehicle Image</label>
-                                <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="year" class="form-label">Year *</label>
+                                        <input type="number" class="form-control" id="year" name="year" value="{{ old('year', $vehicle->year) }}" min="1990" max="{{ date('Y') + 1 }}" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label">Update Vehicle Image</label>
+                                        <input type="file" class="form-control" id="image" name="image" accept="image/*">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -111,8 +127,11 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="price_per_day" class="form-label">Price Per Day </label>
-                                <input type="number" step="0.01" class="form-control" id="price_per_day" name="price_per_day" value="{{ old('price_per_day', $vehicle->price_per_day) }}" required>
+                                <label for="price_per_day" class="form-label">Price Per Day (रू) *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">रू</span>
+                                    <input type="number" step="0.01" class="form-control" id="price_per_day" name="price_per_day" value="{{ old('price_per_day', $vehicle->price_per_day) }}" required>
+                                </div>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -123,8 +142,12 @@
                         </div>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Update Vehicle</button>
-                    <a href="{{ route('admin.manage') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save me-2"></i>Update Vehicle
+                    </button>
+                    <a href="{{ route('admin.vehicles.index') }}" class="btn btn-secondary">
+                        <i class="fas fa-times me-2"></i>Cancel
+                    </a>
                 </form>
             </div>
         </div>

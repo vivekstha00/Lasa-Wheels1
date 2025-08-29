@@ -32,10 +32,27 @@
                                 <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
                             </div>
                         </div>
+                        <!-- ADD THIS: Brand Field -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="brand" class="form-label">Brand *</label>
+                                <input type="text" class="form-control" id="brand" name="brand" value="{{ old('brand') }}" placeholder="e.g., Toyota, Honda, Ford" required>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label for="model" class="form-label">Model *</label>
                                 <input type="text" class="form-control" id="model" name="model" value="{{ old('model') }}" required>
+                            </div>
+                        </div>
+                        <!-- ADD THIS: Year Field -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="year" class="form-label">Year *</label>
+                                <input type="number" class="form-control" id="year" name="year" value="{{ old('year') }}" min="1990" max="{{ date('Y') + 1 }}" placeholder="{{ date('Y') }}" required>
                             </div>
                         </div>
                     </div>
@@ -84,7 +101,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="price_per_day" class="form-label">Price Per Day </label>
+                                <label for="price_per_day" class="form-label">Price Per Day *</label>
                                 <div class="input-group">
                                     <span class="input-group-text">रू</span>
                                     <input type="number" step="0.01" class="form-control" id="price_per_day" name="price_per_day" value="{{ old('price_per_day') }}" placeholder="0.00" required>
