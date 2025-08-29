@@ -13,6 +13,7 @@ use App\Http\Controllers\User\ContactController;
 use App\Http\Controllers\User\AboutController;
 use App\Http\Controllers\User\BlogController;
 use App\Http\Controllers\User\AuthController;
+use App\Http\Controllers\BookingController;
 
 
 // Public routes
@@ -38,6 +39,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::get('/about', [AboutController::class, 'index'])->name('about');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs');
+});
+
+// Booking routes
+Route::middleware('auth')->group(function () {
+    Route::get('/booking/create/{vehicle}', [BookingController::class, 'create'])->name('booking.create');
+    Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+    Route::get('/booking/confirmation/{id}', [BookingController::class, 'confirmation'])->name('booking.confirmation');
+    Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('booking.my');
+    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
 });
 
 // Admin routes

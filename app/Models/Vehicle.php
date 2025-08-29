@@ -36,4 +36,22 @@ class Vehicle extends Model
     {
         return $this->belongsTo(Transmission::class);
     }
+    public function isAvailableForDates($pickupDate, $returnDate)
+    {
+        return !$this->bookings()
+            ->where('status', '!=', 'cancelled')
+            ->where(function($query) use ($pickupDate, $returnDate) {
+                $query->whereBetween('pickup_date', [$pickupDate, $returnDate])
+                    ->orWhereBetween('return_date', [$pickupDate, $returnDate])
+                    ->orWhere(function($q) use ($pickupDate, $returnDate) {
+                        $q->where('pickup_date', '<=', $pickupDate)
+                            ->where('return_date', '>=', $returnDate);
+                    });
+            })
+            ->exists();
+    }
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
 }
