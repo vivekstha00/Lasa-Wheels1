@@ -15,6 +15,7 @@ use App\Http\Controllers\User\BlogController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\Admin\AdminBookingController;
+use App\Http\Controllers\User\UserProfileController;
 
 
 // Public routes
@@ -50,6 +51,18 @@ Route::middleware('auth')->group(function () {
     Route::get('/my-bookings', [BookingController::class, 'myBookings'])->name('booking.my');
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
     Route::post('/booking/{id}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+});
+
+
+// User Profile routes
+Route::middleware('auth')->prefix('profile')->group(function () {
+    Route::get('/', [UserProfileController::class, 'index'])->name('user.profile.index');
+    Route::get('/edit', [UserProfileController::class, 'edit'])->name('user.profile.edit');
+    Route::put('/update', [UserProfileController::class, 'update'])->name('user.profile.update');
+    Route::get('/change-password', [UserProfileController::class, 'changePasswordForm'])->name('user.profile.change-password');
+    Route::post('/change-password', [UserProfileController::class, 'changePassword'])->name('user.profile.update-password');
+    Route::get('/booking-history', [UserProfileController::class, 'bookingHistory'])->name('user.profile.booking-history');
+    Route::get('/loyalty-points', [UserProfileController::class, 'loyaltyPoints'])->name('user.profile.loyalty-points');
 });
 
 // Admin routes
