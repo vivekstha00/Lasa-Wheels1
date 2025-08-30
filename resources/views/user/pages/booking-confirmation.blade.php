@@ -77,7 +77,7 @@
             </div>
 
             <div class="text-center mt-4">
-                <a href="{{ route('my.bookings') }}" class="btn btn-primary me-3">
+                <a href="{{ route('booking.my') }}" class="btn btn-primary me-3">
                     <i class="fas fa-list me-2"></i>View My Bookings
                 </a>
                 <a href="{{ route('vehicle') }}" class="btn btn-outline-secondary">

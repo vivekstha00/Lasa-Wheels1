@@ -14,6 +14,7 @@ use App\Http\Controllers\User\AboutController;
 use App\Http\Controllers\User\BlogController;
 use App\Http\Controllers\User\AuthController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\Admin\AdminBookingController;
 
 
 // Public routes
@@ -62,4 +63,16 @@ Route::prefix('admin')->group(function () {
         Route::resource('vehicles', AdminVehicleController::class, ['as' => 'admin']);
         Route::resource('users', AdminUserController::class, ['as' => 'admin']);
     });
+});
+
+// Admin routes
+Route::prefix('admin')->middleware(['auth'])->group(function () {
+
+    Route::get('/bookings', [AdminBookingController::class, 'index'])->name('admin.bookings.index');
+    Route::get('/bookings/{id}', [AdminBookingController::class, 'show'])->name('admin.bookings.show');
+    Route::post('/bookings/{id}/approve', [AdminBookingController::class, 'approve'])->name('admin.bookings.approve');
+    Route::post('/bookings/{id}/reject', [AdminBookingController::class, 'reject'])->name('admin.bookings.reject');
+    Route::post('/bookings/{id}/active', [AdminBookingController::class, 'markActive'])->name('admin.bookings.active');
+    Route::post('/bookings/{id}/complete', [AdminBookingController::class, 'markCompleted'])->name('admin.bookings.complete');
+    Route::post('/bookings/{id}/status', [AdminBookingController::class, 'updateStatus'])->name('admin.bookings.status');
 });

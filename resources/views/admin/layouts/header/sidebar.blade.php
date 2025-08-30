@@ -18,6 +18,11 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link text-white" href="{{ route('admin.bookings.index') }}">
+                <i class="fas fa-book me-2"></i>Manage Bookings
+            </a>
+        </li>
+        <li class="nav-item">
             <form action="{{ route('admin.logout') }}" method="POST">
                 @csrf
                 <button type="submit" class="btn btn-outline-light w-100">
