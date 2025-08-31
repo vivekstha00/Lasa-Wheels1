@@ -22,7 +22,7 @@ use App\Http\Controllers\User\UserProfileController;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('/register', [LoginController::class, 'registerStore'])->name('user.register.store');
-Route::get('/login', [LoginController::class, 'index'])->name('user.login');
+Route::get('/login', [LoginController::class, 'index'])->name('login'); 
 Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 

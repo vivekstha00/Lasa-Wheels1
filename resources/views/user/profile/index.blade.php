@@ -38,41 +38,11 @@
                     <h5 class="fw-bold">{{ $user->name }}</h5>
                     <p class="text-muted mb-2">{{ $user->email }}</p>
                     
-                    <!-- Membership Level -->
-                    <span class="badge bg-{{ $user->membership_color }} mb-3">
-                        <i class="fas fa-crown me-1"></i>{{ $user->membership_level }}
-                    </span>
-                    
-                    <!-- Profile Completion -->
-                    <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center mb-1">
-                            <small class="text-muted">Profile Completion</small>
-                            <small class="text-muted">{{ $user->profile_completion }}%</small>
-                        </div>
-                        <div class="progress" style="height: 8px;">
-                            <div class="progress-bar" role="progressbar" style="width: {{ $user->profile_completion }}%"></div>
-                        </div>
-                        @if($user->profile_completion < 100)
-                            <small class="text-warning">
-                                <i class="fas fa-exclamation-triangle me-1"></i>
-                                Complete your profile to unlock all features
-                            </small>
-                        @endif
-                    </div>
-                    
                     <!-- Loyalty Points -->
                     <div class="bg-light p-3 rounded mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <span><i class="fas fa-star text-warning me-2"></i>Loyalty Points</span>
                             <span class="fw-bold text-primary">{{ number_format($user->loyalty_points) }}</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Total Spent -->
-                    <div class="bg-light p-3 rounded mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span><i class="fas fa-rupee-sign text-success me-2"></i>Total Spent</span>
-                            <span class="fw-bold text-success">रू{{ number_format($user->total_spent, 2) }}</span>
                         </div>
                     </div>
                     

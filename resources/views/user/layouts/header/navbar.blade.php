@@ -26,7 +26,7 @@
             </ul>
             <div>
                 @guest
-                    <a href="{{ route('user.login') }}">
+                    <a href="{{ route('login') }}">
                         <button class="btn btn-outline-light me-2" style="min-width: 84px!important;" type="button">
                             Login
                         </button>
