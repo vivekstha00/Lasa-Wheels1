@@ -110,11 +110,151 @@
                     <h5 class="mb-0">Booking Information</h5>
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('booking.store') }}" method="POST" id="bookingForm">
+                    <form action="{{ route('booking.store') }}" method="POST" id="bookingForm" enctype="multipart/form-data">
                         @csrf
                         <input type="hidden" name="vehicle_id" value="{{ $vehicle->id }}">
                         
-                        <!-- Date Selection -->
+                        <!-- Personal Information -->
+                        <h6 class="mb-3"><i class="fas fa-user me-2"></i>Personal Information</h6>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="first_name" class="form-label">First Name <span class="text-danger">*</span></label>
+                                <input type="text" 
+                                       class="form-control @error('first_name') is-invalid @enderror" 
+                                       id="first_name" 
+                                       name="first_name"
+                                       value="{{ old('first_name', Auth::user()->name ? explode(' ', Auth::user()->name)[0] : '') }}"
+                                       required>
+                                @error('first_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last_name" class="form-label">Last Name <span class="text-danger">*</span></label>
+                                <input type="text" 
+                                       class="form-control @error('last_name') is-invalid @enderror" 
+                                       id="last_name" 
+                                       name="last_name"
+                                       value="{{ old('last_name', Auth::user()->name && count(explode(' ', Auth::user()->name)) > 1 ? explode(' ', Auth::user()->name)[1] : '') }}"
+                                       required>
+                                @error('last_name')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                                <input type="email" 
+                                       class="form-control @error('email') is-invalid @enderror" 
+                                       id="email" 
+                                       name="email"
+                                       value="{{ old('email', Auth::user()->email) }}"
+                                       required>
+                                @error('email')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                <input type="tel" 
+                                       class="form-control @error('phone') is-invalid @enderror" 
+                                       id="phone" 
+                                       name="phone"
+                                       value="{{ old('phone', Auth::user()->phone) }}"
+                                       placeholder="+977-9xxxxxxxxx"
+                                       required>
+                                @error('phone')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="additional_contact" class="form-label">Additional Contact (Optional)</label>
+                                <input type="tel" 
+                                       class="form-control @error('additional_contact') is-invalid @enderror" 
+                                       id="additional_contact" 
+                                       name="additional_contact"
+                                       value="{{ old('additional_contact') }}"
+                                       placeholder="Emergency contact number">
+                                @error('additional_contact')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                                <select class="form-select @error('country') is-invalid @enderror" 
+                                        id="country" 
+                                        name="country" 
+                                        required>
+                                    <option value="">Select Country</option>
+                                    <option value="Nepal" {{ old('country') == 'Nepal' ? 'selected' : '' }}>Nepal</option>
+                                    <option value="India" {{ old('country') == 'India' ? 'selected' : '' }}>India</option>
+                                    <option value="China" {{ old('country') == 'China' ? 'selected' : '' }}>China</option>
+                                    <option value="Bangladesh" {{ old('country') == 'Bangladesh' ? 'selected' : '' }}>Bangladesh</option>
+                                    <option value="USA" {{ old('country') == 'USA' ? 'selected' : '' }}>USA</option>
+                                    <option value="UK" {{ old('country') == 'UK' ? 'selected' : '' }}>UK</option>
+                                    <option value="Other" {{ old('country') == 'Other' ? 'selected' : '' }}>Other</option>
+                                </select>
+                                @error('country')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="national_id_file" class="form-label">National ID / Passport <span class="text-danger">*</span></label>
+                                <input type="file" 
+                                    class="form-control @error('national_id_file') is-invalid @enderror" 
+                                    id="national_id_file" 
+                                    name="national_id_file"
+                                    accept="image/*,.pdf"
+                                    required>
+                                @error('national_id_file')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">Upload clear image or PDF (Max: 2MB)</div>
+                                
+                                <!-- Preview for National ID -->
+                                <div id="national_id_preview" class="mt-2" style="display: none;">
+                                    <img id="national_id_img" src="" alt="National ID Preview" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+                                    <div id="national_id_pdf" class="alert alert-info" style="display: none;">
+                                        <i class="fas fa-file-pdf me-2"></i>PDF file selected: <span id="national_id_filename"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="license_file" class="form-label">Driving License <span class="text-danger">*</span></label>
+                                <input type="file" 
+                                    class="form-control @error('license_file') is-invalid @enderror" 
+                                    id="license_file" 
+                                    name="license_file"
+                                    accept="image/*,.pdf"
+                                    required>
+                                @error('license_file')
+                                    <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                                <div class="form-text">Upload clear image or PDF (Max: 2MB)</div>
+                                
+                                <!-- Preview for License -->
+                                <div id="license_preview" class="mt-2" style="display: none;">
+                                    <img id="license_img" src="" alt="License Preview" class="img-thumbnail" style="max-width: 200px; max-height: 150px;">
+                                    <div id="license_pdf" class="alert alert-info" style="display: none;">
+                                        <i class="fas fa-file-pdf me-2"></i>PDF file selected: <span id="license_filename"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Booking Details -->
+                        <h6 class="mb-3"><i class="fas fa-calendar me-2"></i>Booking Details</h6>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label for="pickup_date" class="form-label">Pickup Date <span class="text-danger">*</span></label>
@@ -161,6 +301,18 @@
                             <div class="form-text">We'll arrange pickup from your specified location</div>
                         </div>
 
+                        <!-- Notes -->
+                        <div class="mb-4">
+                            <label for="notes" class="form-label">Additional Notes (Optional)</label>
+                            <textarea class="form-control @error('notes') is-invalid @enderror" 
+                                      id="notes" 
+                                      name="notes" 
+                                      rows="3"
+                                      placeholder="Any special requirements or additional information...">{{ old('notes') }}</textarea>
+                            @error('notes')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
 
                         <!-- Terms and Conditions -->
                         <div class="mb-4">

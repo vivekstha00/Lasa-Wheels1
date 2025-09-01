@@ -13,6 +13,14 @@ class Booking extends Model
     protected $fillable = [
         'user_id',
         'vehicle_id',
+        'first_name',
+        'last_name', 
+        'email',
+        'phone',
+        'additional_contact',
+        'country',
+        'national_id_passport',
+        'license_number',
         'pickup_date',
         'return_date',
         'pickup_location',
@@ -21,7 +29,7 @@ class Booking extends Model
         'total_amount',
         'status',
         'notes',
-        'confirmed_at'
+        'confirmed_at',
     ];
 
     protected $dates = [

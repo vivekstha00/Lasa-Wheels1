@@ -27,10 +27,19 @@ class BookingController extends Controller
     {
         $request->validate([
             'vehicle_id' => 'required|exists:vehicles,id',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255', 
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'additional_contact' => 'nullable|string|max:20',
+            'country' => 'required|string|max:100',
+            'national_id_passport' => 'required|string|max:100',
+            'license_number' => 'required|string|max:100',
             'pickup_date' => 'required|date|after_or_equal:today',
             'return_date' => 'required|date|after:pickup_date',
             'pickup_location' => 'required|string|max:255',
-            'terms' => 'required|accepted'
+            'notes' => 'nullable|string|max:1000',
+            'terms' => 'required|accepted',
         ]);
 
         $vehicle = Vehicle::findOrFail($request->vehicle_id);
@@ -50,13 +59,22 @@ class BookingController extends Controller
         $booking = Booking::create([
             'user_id' => Auth::id(),
             'vehicle_id' => $vehicle->id,
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'additional_contact' => $request->additional_contact,
+            'country' => $request->country,
+            'national_id_passport' => $request->national_id_passport,
+            'license_number' => $request->license_number,
             'pickup_date' => $request->pickup_date,
             'return_date' => $request->return_date,
             'pickup_location' => $request->pickup_location,
             'total_days' => $totalDays,
             'price_per_day' => $vehicle->price_per_day,
             'total_amount' => $totalAmount,
-            'status' => 'pending'
+            'notes' => $request->notes,
+            'status' => 'pending',
         ]);
 
         return redirect()->route('booking.confirmation', $booking->id)
